@@ -265,7 +265,7 @@ function updateTransformed() {
 <meta name="keywords" content="иероглифы, транслитерация, онлайн конвертер, иероглификатор, текст в иероглифы">
 <meta name="robots" content="index, follow">
 <div class="min-h-screen bg-gray-900 text-gray-300 p-6 flex flex-col max-w-4xl mx-auto space-y-6">
-  <h1 class="text-3xl font-semibold text-gray-500">ИЕРОГЛИФИКАТОР: Текст в Иероглифы</h1>
+  <h1 class="select-none text-3xl font-semibold text-gray-500">ИЕРОГЛИФИКАТОР: Текст в Иероглифы</h1>
 
   <div class="flex flex-col md:flex-row  items-stretch gap-4 h-[400px]">
     <div class="flex-1 bg-gray-800 rounded-lg p-4 h-full box-border text-gray-300">
