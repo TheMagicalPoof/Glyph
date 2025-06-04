@@ -1,15 +1,31 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { charMap } from '$lib/charMap';
+  import * as m from "$lib/paraglide/messages"
+
+  import { setLocale, locales} from '$lib/paraglide/runtime';
+
+	function isLocale(value: string): value is typeof locales[number] {
+		return locales.includes(value as typeof locales[number]);
+	}
+		
+    let lang = navigator.language?.split('-')[0]?.toLowerCase() ?? '';
+
+	  if (isLocale(lang)) {
+      setLocale(lang);
+    } else {
+      setLocale('en');
+    }
 
   onMount(() => {
+
     const check = () => {
       isMobile = window.innerWidth <= 768;
     };
     check();
     window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  });
+      return () => window.removeEventListener('resize', check);
+    });
 
   export function clickOutside(node: HTMLElement, callback: () => void) {
     const handleClick = (event: MouseEvent) => {
@@ -172,7 +188,7 @@ function updateTransformed() {
     font-size: 0.75rem;
     color: var(--color-gray-700);
     margin-top: 2rem;
-    max-width: 600px;
+    /* max-width: 600px; */
     line-height: 1.2;
     user-select: none;
   }
@@ -194,18 +210,19 @@ function updateTransformed() {
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="canonical" href="https://red.dim/hieroglyphicizer" />
-<meta name="description" content="Онлайн инструмент для преобразования русского и латинского текста в стилизованные иероглифы. Введите слово и получите уникальную иероглифическую транслитерацию.">
-<meta name="keywords" content="иероглифы, транслитерация, онлайн конвертер, иероглификатор, текст в иероглифы">
+<link rel="canonical" href="https://themagicalpoof.github.io/glyph/" />
+<title>Glyph - {m.glyph_description()}</title>
+<meta name="description" content={m.page_description()}>
+<meta name="keywords" content={m.search_keywords()}>
 <meta name="robots" content="index, follow">
 <div class="min-h-screen bg-gray-900 text-gray-300 p-6 flex flex-col max-w-4xl mx-auto space-y-6">
-  <h1 class="select-none text-3xl font-semibold text-gray-500">ИЕРОГЛИФИКАТОР: Текст в Иероглифы</h1>
+  <h1 class="select-none text-3xl font-semibold text-gray-500 text-center">Glyph - {m.glyph_description()}</h1>
 
   <div class="flex flex-col md:flex-row  items-stretch gap-4 h-[400px]">
     <div class="flex-1 bg-gray-800 rounded-lg p-4 h-full box-border text-gray-300">
       <textarea
       bind:value={input}
-      placeholder="Введите текст..."
+      placeholder={m.input_text()}
       class="clean">
       
     </textarea>
@@ -283,10 +300,10 @@ function updateTransformed() {
       class:duration-150={transformed}
       class:ease-out={transformed}
       disabled={!transformed}
-      title="Случайные иероглифы"
+      title={m.randomise_title()}
       on:click={rerandomize}
     >
-      🎲 Рандом
+      🎲 {m.randomise()}
     </button>
     <button
       class="w-1/2 md:w-1/5 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg px-4 py-2 transition-colors relative inline-block cursor-pointer"
@@ -298,10 +315,10 @@ function updateTransformed() {
       class:duration-150={transformed}
       class:ease-out={transformed}
       disabled={!transformed}
-      title="Скопировать результат"
+      title={m.copy_title()}
       on:click={() => copyToClipboard(transformed)}
     >
-      📋 Копировать
+      📋 {m.copy()}
 
       {#if showNotification}
       <div
@@ -317,9 +334,9 @@ function updateTransformed() {
 
 
   <section class="seo-text">
-      <h1>Иероглификатор — онлайн конвертер текста в иероглифы</h1>
-      <p>Введите любой текст на русском или английском языке, и наш инструмент преобразует его в стилизованные иероглифы, создавая уникальную визуальную запись.</p>
-      <p>Идеально подходит для создания необычных никнеймов, арт-надписей и оформления сообщений.</p>
-    </section>
-  <title>Иероглификатор — транслит текста в иероглифы онлайн</title>
+      <p class="m-1">{m.seo_1()}</p>
+      <p class="m-1">{m.seo_2()}</p>
+      <p class="m-1">{m.seo_3()}</p>
+      <p class="m-1">{m.seo_4()}</p>
+  </section>
 </div>
